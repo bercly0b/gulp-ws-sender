@@ -1,8 +1,8 @@
-const broadcast = require('./src/broadcast')
 const server = require('./src/server')
+const broadcast = require('./src/broadcast')
 
 
 module.exports = {
-  broadcast,
-  server
+  server,
+  broadcast
 }
