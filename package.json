@@ -12,6 +12,7 @@
   "dependencies": {
     "chalk": "^2.4.1",
     "gulp-util": "^3.0.8",
-    "through2": "^3.0.0"
+    "through2": "^3.0.0",
+    "ws": "^6.1.0"
   }
 }

@@ -6,9 +6,14 @@ const getTime = () => {
   return `${add0(now.getHours())}:${add0(now.getMinutes())}:${add0(now.getSeconds())}`
 }
 
-const getMessage = type => {
+const getClientMessage = type => {
   const time = getTime()
   return `[${chalk.gray(time)}] ${chalk.yellow(type)} was sent`
 }
 
-module.exports = getMessage
+const getServerMessage = (action, client) => {
+  const time = getTime()
+  return `[${chalk.gray(time)}] ${action} ${chalk.green(client)}`
+}
+
+module.exports = { getClientMessage, getServerMessage }

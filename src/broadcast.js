@@ -1,6 +1,6 @@
 const gutil = require('gulp-util')
 const through = require('through2')
-const getMessage = require('./helper')
+const getMessage = require('./helper').getClientMessage
 
 module.exports = options => {
 
