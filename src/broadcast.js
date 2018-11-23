@@ -1,15 +1,18 @@
 const gutil = require('gulp-util')
 const through = require('through2')
 const WebSocket = require('ws')
+const server = require('./server')
 const getMessage = require('./helper').getClientMessage
 
 
 module.exports = port => {
+
+  server(port)
   const ws = new WebSocket('ws://localhost:' + port)
+  
   return options => {
     const { type } = options
-    // const { client: ws, type } = options
-
+    
     return through.obj(function(file, enc, cb) {
 
       if (file.isNull()) {

@@ -2,10 +2,8 @@ const WebSocket = require('ws')
 const chalk = require('chalk')
 const getMessage = require('./helper').getServerMessage
 
-module.exports = options => {
-
-  const { port } = options
-
+module.exports = port => {
+  
   const clients = {}
   let needHandler = true
 
