@@ -1,4 +1,4 @@
-const gutil = require('gulp-util')
+const PluginError = require('plugin-error');
 const through = require('through2')
 const WebSocket = require('ws')
 const server = require('./server')
@@ -21,7 +21,7 @@ module.exports = port => {
       }
 
       if (file.isStream()) {
-        cb(new gutil.PluginError('gulp-ws-sender', 'Streaming not supported'))
+        cb(new PluginError('gulp-ws-sender', 'Streaming not supported'))
         return
       }
 
@@ -33,7 +33,7 @@ module.exports = port => {
         this.push(file)
         console.log(getMessage(type))
       } catch (err) {
-        this.emit('error', new gutil.PluginError('gulp-ws-sender', err))
+        this.emit('error', new PluginError('gulp-ws-sender', err, { showStack: true }))
         console.log(err)
       }
 

@@ -3,7 +3,7 @@ const chalk = require('chalk')
 const getMessage = require('./helper').getServerMessage
 
 module.exports = port => {
-  
+
   const clients = {}
   let needHandler = true
 
@@ -11,7 +11,7 @@ module.exports = port => {
 
   webSocketServer.on('connection', ws => {
 
-    const client = clients.gulp ? 'browser' : 'gulp'
+    const client = clients.gulp ? 'browser' : 'gulp-ws-sender'
     clients[client] = ws
     console.log(getMessage('Connected', client))
 
