@@ -1,17 +1,15 @@
 const PluginError = require('plugin-error')
 const through = require('through2')
-const WebSocket = require('ws')
-const server = require('./server')
+const Server = require('./server')
 const getMessage = require('./helper').getClientMessage
 
 module.exports = port => {
-  server(port)
-  const ws = new WebSocket('ws://localhost:' + port)
+  const app = new Server(port)
 
   return options => {
     const { type } = options
 
-    return through.obj((file, enc, cb) => {
+    return through.obj(function(file, enc, cb) {
       if (file.isNull()) {
         cb(null, file)
         return
@@ -24,7 +22,7 @@ module.exports = port => {
 
       try {
         const prefix = type === 'js' ? 'js' : 'st'
-        ws.send(prefix + file.contents.toString())
+        app.send(prefix + file.contents.toString())
 
         file.contents = Buffer.from(file.contents)
         this.push(file)
