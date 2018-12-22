@@ -1,7 +1,7 @@
 {
   "name": "gulp-ws-sender",
-  "version": "1.1.1",
-  "description": "start the websocket server and send your js and css to it ^^",
+  "version": "1.2.0",
+  "description": "For live injection of your script and styles on any page",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
