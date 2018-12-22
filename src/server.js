@@ -1,28 +1,32 @@
 const WebSocket = require('ws')
 const getMessage = require('./helper').getServerMessage
 
-module.exports = port => {
-  const clients = {}
-  let needHandler = true
+module.exports = class Server {
+  constructor(port) {
+    this.clients = {}
+    this._init(port)
+  }
 
-  const webSocketServer = new WebSocket.Server({ port })
+  _init(port) {
+    this.server = new WebSocket.Server({ port })
 
-  webSocketServer.on('connection', ws => {
-    const client = clients.sender ? 'browser' : 'sender'
-    clients[client] = ws
-    console.log(getMessage('Connected', client))
+    this.server.on('connection', ws => {
+      ws.id = Math.random().toString(36).substring(5)
+      this.clients[ws.id] = ws
+      console.log(getMessage('Connected', `browser (id: ${ws.id})`))
 
-    ws.on('close', () => {
-      delete clients[client]
-      console.log(getMessage('Disconnected', client))
+      ws.on('close', () => {
+        delete this.clients[ws.id]
+        console.log(getMessage('Disconnected', `browser (id: ${ws.id})`))
+      })
     })
 
-    if (needHandler && clients.sender) {
-      needHandler = false
-      clients.sender.on('message', message => {
-        // console.log(getMessage('Received message from', client), `: ${message}`)
-        clients.browser && clients.browser.send(message)
-      })
-    }
-  })
+    console.log(getMessage('Server is waiting for connection on port', port))
+  }
+
+  send(data) {
+    Object.values(this.clients).forEach(client => {
+      if (client.readyState === WebSocket.OPEN) client.send(data)
+    })
+  }
 }
