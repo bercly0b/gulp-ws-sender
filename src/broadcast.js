@@ -1,20 +1,17 @@
-const PluginError = require('plugin-error');
+const PluginError = require('plugin-error')
 const through = require('through2')
 const WebSocket = require('ws')
 const server = require('./server')
 const getMessage = require('./helper').getClientMessage
 
-
 module.exports = port => {
-
   server(port)
   const ws = new WebSocket('ws://localhost:' + port)
-  
+
   return options => {
     const { type } = options
-    
-    return through.obj(function(file, enc, cb) {
 
+    return through.obj((file, enc, cb) => {
       if (file.isNull()) {
         cb(null, file)
         return
