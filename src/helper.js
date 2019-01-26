@@ -11,9 +11,9 @@ const getClientMessage = type => {
   return `[${chalk.gray(time)}] ${chalk.yellow(type)} was sent`
 }
 
-const getServerMessage = (action, client) => {
+const getServerMessage = (action, client, color = 'green') => {
   const time = getTime()
-  return `[${chalk.gray(time)}] ${action} ${chalk.green(client)}`
+  return `[${chalk.gray(time)}] ${action} ${chalk[color](client)}`
 }
 
 module.exports = { getClientMessage, getServerMessage }

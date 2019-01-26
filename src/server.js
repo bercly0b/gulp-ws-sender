@@ -15,13 +15,17 @@ module.exports = class Server {
       this.clients[ws.id] = ws
       console.log(getMessage('Connected', `browser (id: ${ws.id})`))
 
+      ws.on('message', data => {
+        console.log(getMessage('...to tab', `'${data}'`, 'yellow'))
+      })
+
       ws.on('close', () => {
         delete this.clients[ws.id]
-        console.log(getMessage('Disconnected', `browser (id: ${ws.id})`))
+        console.log(getMessage('Disconnected', `browser (id: ${ws.id})`, 'red'))
       })
     })
 
-    console.log(getMessage('Server is waiting for connection on port', port))
+    console.log(getMessage('Server is waiting for connection on port', port, 'magenta'))
   }
 
   send(data) {
